@@ -12,7 +12,7 @@ cargo run --bin event_beacon node
 Controller Mode (Remote Host):
 Deploy host mode remotely using a client request JSON file and target node name:
 cargo run --bin event_beacon -- <request_from_client.json> <target_node_name>
-This copies the JSON file to the specified node, starts host mode remotely, and returns a final receipt.
+
 
 Deployment & Stopping
 Deploy to Nodes:
