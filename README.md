@@ -1,11 +1,3 @@
-Project Description
--------------------
-Event Beacon is a lightweight, distributed signature coordination system for multi‐party workflows.  
-It verifies client-submitted requests, broadcasts them to a configurable set of co-signers, and aggregates cryptographic BeaconStamps.  
-Once all parties have signed, it assembles a tamper-evident, fully signed receipt and records it immutably.  
-Every node persists both intermediate BeaconStamps and final receipts, providing a transparent audit trail.  
-Ideal for digital contract execution, it ensures non-repudiation, consensus, and verifiable timestamping across distributed participants.
-
 1. EXECUTION STEPS
 ------------------
 
