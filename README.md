@@ -37,7 +37,7 @@ Transactions
       `$HOME/Ebeacon/transactions/<tx_id>.json` on every node.  
   • To inspect, simply `ls $HOME/Ebeacon/transactions` or open files.
 
-2. FILE SUMMARY
+FILE SUMMARY
 ---------------
 
 Root directory (Ebeacon/)  
