@@ -1,4 +1,9 @@
-1. EXECUTION STEPS
+About:
+This project implements a storage‐free decentralized beacon network that lets a private channel of clients execute smart contracts locally and only exchange lightweight provenance signatures (“beacon stamps”) instead of full state.
+Each transaction request is broadcast to all nodes, which each verify the embedded client signature and only produce their beacon stamp once they’ve observed identical requests (same event hash) from every co-signing client, ensuring end-to-end trust.
+By avoiding on-chain state storage and synchronizing only cryptographic proofs among consenting participants, it delivers high-throughput, scalable execution for permissioned smart-contract workflows.
+
+EXECUTION STEPS
 ------------------
 
 Build (Release Mode)  
@@ -20,7 +25,7 @@ Deploy to All Nodes
 
 Stop All Nodes  
   • SSH into each host (per `nodelist`) and kill any running beacon:  
-    ```  
+    ```
     cargo run --bin stop_all_beacon  
     ```
 
@@ -58,60 +63,41 @@ Root directory (Ebeacon/)
     SSH keys for deploying to Raspberry Pi nodes.
 
 src/  
-  • main.rs  
-    CLI entry point dispatching to controller or node mode.
+src/main.rs
+The CLI entry point: parses arguments, chooses “node” vs. “host” vs. “controller” mode, and hands off to service.rs.
 
-  • action.rs  
-    Nonce generation and low-level sign/verify helpers produce BeaconStamp messages.
+src/handler.rs
+Implements the HTTP API (using Warp) for /clientrequest and /forward endpoints: validates signatures, aggregates co-signers with a timeout, signs, logs, and responds with BeaconStamps.
 
-  • application.rs  
-    “Host” logic: reads a client request, builds & signs a ForwardMessage, broadcasts it, collects BeaconStamps, builds & signs the final Receipt, logs it, writes it to final_receipts/, and records a Transaction.
+src/application.rs
+Coordinates “host” mode: reads a client request file, validates it, builds & signs a ForwardMessage, broadcasts it, collects all BeaconStamp replies, assembles & signs the final Receipt, logs it, and records a Transaction.
 
-  • handler.rs  
-    Warp HTTP handlers for /clientrequest and /forward: validating signatures, aggregating co-signers, stamping & responding.
+src/service.rs
+Drives overall execution based on command-line mode flags—launches the Warp server for node mode or kicks off host/controller flows.
 
-  • host.rs  
-    Wraps getting this machine’s identity (hostname → public key path).
+src/action.rs
+Provides cryptographic utilities: nonce generation, signing raw JSON messages (ClientRequest, ForwardMessage, ReceiptPayload), and verifying responses.
 
-  • lib.rs  
-    Re-exports modules for use as a library.
+src/record.rs
+Persists any signed message (BeaconStamp or final Receipt) as a JSON file under $HOME/Ebeacon/transactions, using the transaction hash as filename.
 
-  • message.rs  
-    All JSON-serializable structs: ClientRequest, ForwardMessage, BeaconStamp, Receipt, etc.
+src/transaction.rs
+Defines the Transaction struct (ID, counter/timestamp, previous hash) and maintains an in-memory ledger of all Transactions recorded by the controller.
 
-  • network.rs  
-    Async broadcast & collect functions for forwarding and stamping.
+src/network.rs
+Broadcasts the signed ForwardMessage via HTTP POST to each peer node (excluding self), applies an HTTP timeout, and gathers successful BeaconStamp responses.
 
-  • node.rs  
-    Signature validation logic for inbound ClientRequest and ForwardMessage.
+src/node.rs
+Implements all on-chain signature validations: checks ClientRequest signatures, ForwardMessage signatures, and incoming BeaconStamp payload integrity.
 
-  • record.rs  
-    log_transaction(json: &str) writes the complete JSON of each BeaconStamp or Receipt to $HOME/Ebeacon/transactions/.
+src/host.rs
+Wraps up retrieval of the local host’s identity (e.g. system hostname) and exposes it to service/application layers.
 
-  • resource.rs  
-    Sets up the Warp server routes for client requests and forwarding.
+src/message.rs
+Houses the Rust structs and (de)serialization code for every JSON message type: ClientRequest, ForwardMessage, BeaconStamp, Receipt, etc.
 
-  • role.rs  
-    Stub for future “Coordinator” vs “Participant” roles.
-
-  • service.rs  
-    Parses CLI args to start in node or controller mode, wires up the Host.
-
-  • transaction.rs  
-    Defines the Transaction struct (ID, counter, prev_hash) and an in-memory ledger.
-
-  • tx_message.rs (optional)  
-    Raw TxMessage definitions if you need generic deserialization.
-
-  • tx_receipt.rs (optional)  
-    JSON structs for acknowledgements (ACK/NACK) at the transaction layer.
-
-  • user.rs  
-    (stub) additional client key-validation helpers.
-
-  • utils.rs  
-    Misc helpers: current_timestamp(), key loading, path helpers, etc.
-
+src/user.rs & src/role.rs
+Currently stubs for client-validation helpers and role definitions (Coordinator vs. Participant); placeholders for future access-control logic.
 
 General FAQs
 Q: Can I shorten or lengthen the HTTP timeout in network.rs?
@@ -137,11 +123,13 @@ A: In src/service.rs, adjust the command-line argument matching logic (the match
 
 Q: Where can I customize the directory used for saving “final_receipts”?
 A: In src/application.rs, after logging the final receipt JSON, insert code such as:
+```
 fs::create_dir_all("final_receipts")?;
 fs::write(
     format!("final_receipts/{}.json", hash),
     &final_receipt_json
 )?;
+```
 Adjust the path string as needed before recompiling.
 
 Q: How do I change the list of nodes I broadcast to?
