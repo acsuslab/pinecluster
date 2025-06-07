@@ -1,0 +1,15 @@
+{
+  "message": {
+    "type": "clientrequest",
+    "from": "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAx8/vdl/rsWQQGRJEu7Zj\nUECgkFBIBWGMFh6XZRpsInDEUeaBE8m6+/h5nh6EHx1mOU/TGtSLTyio9LwzYEeW\nURLOdnVMNAytRIwD2HOejgJQyHw1ZZPO4SpLEfzkZgTnj7q6JFL1rPX6xAE4+TIO\ndAOmuJz6FWbaJhUfK+41pH+F1ce8wXRgQWQw8b9CgQhtUJCX9140ccLsn6Z+tkw5\nQn3KPKhAr2HISXyFc/r47Z5zCoSSVfxSjUZp+L3Z52IvzlNUpytXTGnsLF/8gMXD\noGq2k1pYLR1hyWZ7AbKDzp/stAQuUaAHDLruJxRpRUEKkhAd8kfH4CedE39xZFK9\nhwIDAQAB\n-----END PUBLIC KEY-----",
+    "cosigners": [
+      "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzR4XR1UVklZQavYvCL34\npjzZ4+mcCLLu6Sc/Aa9TK/d/8dnfoCoeWny+y76jupUGu3eNWmMG7Sb6mZsvMsE6\nKNCoNmAeh4F+xlrpCOpmJOeeZuylotkI2QrF4TY9LwwXLLPw/tpB6s8LTbDGK9l7\ni28p/1f4p+vib2XxO0R50LfM9YCmwOoPLAN61gZayr+uwYf52jQvV6X1nvxKoBpZ\nObLbcVow3g0aq5mGbGiVc65q0nCJgMcoWbTyybdvrMjFnS7ziVBpVm2nqh9zd9e9\nXXLyzMlshNnxefwyvaSWkrbuwEYCeDcE8d2QbkTSFse+aeldlJHY+OPjq95FS3Xq\nowIDAQAB\n-----END PUBLIC KEY-----"
+    ],
+    "nonce": "12039303628805059469",
+    "payload": {
+      "event_hash": "0x28afada0d4301c28a663b3163c5be8d0",
+      "timestamp": 123456789
+    }
+  },
+  "signature": "C33ty+LQSMuaVECDYIhxjoPrqiSoXsiDR59xLgdxAShwBFeBD51WrAQ8tjDDy1yG/sh+Mhz0pJ9/CeihVTpxGNkGvnOWEuy1fBVrLFUg8HeZRwAXhVO4n8FIhSzzb/DWvTuZdS/FaGBu3CFaONqLq7fE1LJfTyGt5whWOrMRAbBfbcC5vEI6m0TtPadmIoVGUKl7Bf9zS36HH18JKt0kicG6LMpRx0PRxevUFRJCvInVSZyUh3vnOIzX/lVWQ8CHoh37Z5Ac5lAOh07icZ9U66pHwkJJcOHzPA2JXQhM60pCJAPcTiKBRNRQmtoQfAJFx67H4O/cstmYvw4LnJb+Fg=="
+}

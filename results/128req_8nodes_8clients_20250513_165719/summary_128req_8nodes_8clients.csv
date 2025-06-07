@@ -1,0 +1,11 @@
+total_requests,128
+successful,128
+success_rate,100.00%
+avg_latency_ms,13805.26
+min_latency_ms,449
+max_latency_ms,19652
+wall_time_s,22.481
+throughput_rps,5.69
+per_node_throughput_rps,0.71
+total_comm_bytes,554904
+total_comm_MiB,0.53

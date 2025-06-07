@@ -1,0 +1,15 @@
+total_requests,1024
+successful,1024
+success_rate,100.00%
+avg_latency_ms,20845.18
+min_latency_ms,84
+max_latency_ms,43081
+wall_time_s,96.743
+throughput_rps,10.58
+per_node_throughput_rps,0.66
+total_comm_bytes,1563973
+total_comm_MiB,1.49
+total_network_rx_bytes,138570667
+total_network_tx_bytes,12545069
+total_network_bytes,151115736
+total_network_MiB,144.12
